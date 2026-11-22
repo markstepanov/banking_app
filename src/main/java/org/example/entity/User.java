@@ -11,7 +11,7 @@ public class User {
 
     private String password;
 
-    private String role;
+    private Role role;
 
 
     // List<Account> означает список объектов Account: у пользователя может быть несколько счетов.
@@ -20,7 +20,7 @@ public class User {
 
 
     // Конструктор вызывается при new User(...), чтобы задать начальное состояние объекта.
-    public User(String username, String password, String role) {
+    public User(String username, String password, Role role) {
         // this.username — поле объекта, username — параметр этого конструктора.
         this.username = username;
         this.password = password;
@@ -30,12 +30,12 @@ public class User {
     }
 
     // Методы get... возвращают значения закрытых полей, а set... изменяют их.
-    public String getRole() {
+    public Role getRole() {
 
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
 
         this.role = role;
     }

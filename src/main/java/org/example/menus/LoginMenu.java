@@ -1,7 +1,10 @@
 package org.example.menus;
 
 import org.example.Globals;
+import org.example.entity.Role;
 import org.example.entity.User;
+
+import java.util.Optional;
 
 
 /** Запрашивает логин и пароль, затем ищет совпадение в общем списке пользователей. */
@@ -22,9 +25,48 @@ public class LoginMenu {
             }
         }
         if (!loginExists) {
-            Globals.users.add(new User(loginInput, passwordInput, "user"));
+            Globals.users.add(new User(loginInput, passwordInput, Role.USER));
             System.out.println("Регистрация завершена");
         }
+    }
+
+
+    public Optional<User> login(){
+        System.out.println("Здавствуйте! Пожалуйста введите логин:");
+        System.out.println("Напишите exit чтобы выйти");
+        String loginInput = Globals.scanner.nextLine();
+
+        if (loginInput.equals("exit")){
+            // Завершает всё приложение. Код 0 означает обычное завершение.
+            System.exit(0);
+        }
+
+
+        System.out.println("Введите пароль:");
+        System.out.println("Напишите exit чтобы выйти");
+        String passwordInput= Globals.scanner.nextLine();
+
+        if (passwordInput.equals("exit")){
+            // Завершает всё приложение. Код 0 означает обычное завершение.
+            System.exit(0);
+        }
+
+        // Индексы списка начинаются с 0. size() — количество пользователей.
+        // После каждой проверки i++ увеличивает индекс на 1.
+        for (int i = 0; i < Globals.users.size(); i++){
+            // get(i) берёт пользователя с текущим индексом из списка.
+            User currentUser = Globals.users.get(i);
+            // && требует совпадения обоих условий: и логина, и пароля.
+            if (currentUser.getUsername().equals(loginInput)
+                    && currentUser.getPassword().equals(passwordInput)
+            ){
+                // return завершает метод launch() и передаёт пользователя в Main.
+                return Optional.of(currentUser);
+
+            }
+
+        }
+        return Optional.empty();
     }
 
     public User launch(){
@@ -45,44 +87,13 @@ public class LoginMenu {
                 register();
                 continue;
             }
-            if (!input.equals("1")) {
-                System.out.println("Выберите 1 или 2");
-                continue;
-            }
-
-            System.out.println("Здавствуйте! Пожалуйста введите логин:");
-            System.out.println("Напишите exit чтобы выйти");
-            String loginInput = Globals.scanner.nextLine();
-
-            if (loginInput.equals("exit")){
-                // Завершает всё приложение. Код 0 означает обычное завершение.
-                System.exit(0);
-            }
-
-
-            System.out.println("Введите пароль:");
-            System.out.println("Напишите exit чтобы выйти");
-            String passwordInput= Globals.scanner.nextLine();
-
-            if (passwordInput.equals("exit")){
-                // Завершает всё приложение. Код 0 означает обычное завершение.
-                System.exit(0);
-            }
-
-            // Индексы списка начинаются с 0. size() — количество пользователей.
-            // После каждой проверки i++ увеличивает индекс на 1.
-            for (int i = 0; i < Globals.users.size(); i++){
-                // get(i) берёт пользователя с текущим индексом из списка.
-                User currentUser = Globals.users.get(i);
-                // && требует совпадения обоих условий: и логина, и пароля.
-                if (currentUser.getUsername().equals(loginInput)
-                        && currentUser.getPassword().equals(passwordInput)
-                ){
-                    // return завершает метод launch() и передаёт пользователя в Main.
-                    return currentUser;
+            if (input.equals("1")) {
+                Optional<User> userOptional =  login();
+                if (userOptional.isPresent()){
+                    return userOptional.get();
                 }
-
             }
+
 
         }
     }
