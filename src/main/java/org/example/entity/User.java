@@ -31,18 +31,22 @@ public class User {
 
     // Методы get... возвращают значения закрытых полей, а set... изменяют их.
     public String getRole() {
+
         return role;
     }
 
     public void setRole(String role) {
+
         this.role = role;
     }
 
     public String getUsername() {
+
         return this.username;
     }
 
     public void setUsername(String username) {
+
         this.username = username;
     }
 
@@ -52,5 +56,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
     }
 }

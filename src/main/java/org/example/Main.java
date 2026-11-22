@@ -5,6 +5,7 @@ import org.example.menus.LoginMenu;
 import org.example.menus.UserMenu;
 
 
+
 /** Запускает приложение и выбирает меню по роли вошедшего пользователя. */
 public class Main {
 
